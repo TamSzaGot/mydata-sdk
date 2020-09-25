@@ -1,4 +1,4 @@
-FROM python:2.7
+FROM python:2.7-buster
 MAINTAINER hjhsalo <hjhsalo@gmail.com>
 
 # NOTE: Baseimage python:2.7 already contains latest pip
@@ -31,7 +31,7 @@ RUN apt-get update && apt-get install -y \
 	libffi-dev \
     libssl-dev \
 	python-dev \
-	celeryd \
+#	celeryd \
  && rm -rf /var/lib/apt/lists/*
 
 

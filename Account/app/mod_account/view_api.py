@@ -13,7 +13,7 @@ __status__ = "Development"
 
 # Import dependencies
 import json
-from _mysql_exceptions import IntegrityError
+from mysql.connector import IntegrityError
 from flask import Blueprint, request
 from flask_restful import Resource, Api
 from app.helpers import get_custom_logger, make_json_response, ApiError, validate_json, compare_str_ids, get_utc_time

@@ -12,7 +12,7 @@ __status__ = "Development"
 """
 
 # Import dependencies
-from _mysql_exceptions import IntegrityError
+from mysql.connector import IntegrityError
 from flask import Blueprint, request, json
 from flask_restful import Resource, Api
 from base64 import b64decode

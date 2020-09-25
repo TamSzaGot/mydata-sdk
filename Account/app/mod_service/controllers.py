@@ -2,7 +2,7 @@
 
 # Import dependencies
 import json
-from _mysql import IntegrityError
+from mysql.connector import IntegrityError
 from app.app_modules import db
 from app.helpers import get_custom_logger, ApiError
 from app.mod_blackbox.controllers import get_account_public_key, generate_and_sign_jws
