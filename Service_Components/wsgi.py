@@ -31,6 +31,11 @@ debug_log = logging.getLogger("debug")
 logging.basicConfig()
 debug_log.setLevel(logging.INFO)
 
+import debugpy
+debugpy.listen(('0.0.0.0', 5678))
+debug_log.info("wait_for_client on port 5678")
+debugpy.wait_for_client()
+
 from instance.settings import SERVICE_ROOT_PATH, SERVICE_CR_PATH, SERVICE_SLR_PATH, IS_SINK, IS_SOURCE
 
 # Common parts.

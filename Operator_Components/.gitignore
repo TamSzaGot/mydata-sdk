@@ -68,3 +68,9 @@ crashlytics-build.properties
 
 # Cert password file's default location
 cert_pw
+
+#VS Code
+.vscode
+
+#openvpn
+openvpn-data

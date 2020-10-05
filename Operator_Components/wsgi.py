@@ -33,6 +33,11 @@ debug_log = logging.getLogger("debug")
 logging.basicConfig()
 debug_log.setLevel(logging.DEBUG)
 
+import debugpy
+debugpy.listen(('0.0.0.0', 5678))
+debug_log.info("wait_for_client on port 5678")
+debugpy.wait_for_client()
+
 from instance.settings import OPERATOR_ROOT_PATH, OPERATOR_CR_PATH, OPERATOR_SLR_PATH, OPERATOR_DUMMYUI_PATH
 
 application = DispatcherMiddleware(Operator_Root.create_app(),
@@ -41,4 +46,4 @@ application = DispatcherMiddleware(Operator_Root.create_app(),
                                     OPERATOR_ROOT_PATH + OPERATOR_DUMMYUI_PATH: Operator_DummyUI.create_app()})
 
 if __name__ == "__main__":
-    run_simple('0.0.0.0', 5000, application, use_reloader=False, use_debugger=False, threaded=True)
+    run_simple('0.0.0.0', 5000, application, use_reloader=False, use_debugger=False, threaded=False)

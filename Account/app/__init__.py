@@ -28,6 +28,13 @@ def create_app(config_filename='config'):
     from app.helpers import ApiError, make_json_response, get_custom_logger
     from app.app_modules import db, login_manager
 
+    from debugger import initialize_debugger
+    
+    try:
+       initialize_debugger()
+    except Exception:
+        pass  # or you could use 'continue'
+
     # Application object
     app = Flask(__name__)
     with app.app_context():

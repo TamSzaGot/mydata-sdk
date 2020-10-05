@@ -2,6 +2,19 @@ version: '2'
 
 services:
 
+  openvpn:
+    cap_add:
+      - NET_ADMIN
+    image: kylemanna/openvpn:2.4
+    container_name: mydata-openvpn
+    ports:
+      - "1194:1194/udp"
+    restart: always
+    volumes:
+      - ./openvpn-data/conf:/etc/openvpn
+    networks:
+      - mydata_sdk_demo_network
+
   mysql-db:
     image: mysql:5.7
     container_name: mysql-db
@@ -27,8 +40,10 @@ services:
      - "account-blackbox-data:/mydata-sdk-account/app/mod_blackbox/db"
     depends_on:
       - mysql-db
-    command: uwsgi --socket 0.0.0.0:8080 --protocol=http -w wsgi --callable app --processes 2
+ #   command: uwsgi --socket 0.0.0.0:8080 --protocol=http -w wsgi --callable app --processes 2
+ #   command: python run.py
     environment:
+      - FLASK_APP='run.py'
       - PYTHONUNBUFFERED='true'
       - MYSQL_HOST='mysql-db'
       - MYSQL_USER='mydataaccount'
@@ -312,17 +327,22 @@ services:
       - mydata_sdk_demo_network
 
   jsonserver:
-    image: ondrejmo/json-server
+#    image: ondrejmo/json-server
+    image: vimagick/json-server
+#    image: williamyeh/json-server
     container_name: jsonserver
+    hostname: jsonserver
     volumes:
       - ./serviceregistry.json:/data/db.json
       - ./routes.json:/data/routes.json
-    entrypoint:
-      - json-server 
-      - db.json
-      - --routes
-      - routes.json
-      - -p 80
+#    entrypoint:
+#      - json-server 
+#      - db.json
+#      - --routes
+#      - routes.json
+#      - -p 80
+#      - -H jsonserver
+    command: -H 0.0.0.0 -p 80 -w db.json --id  'serviceId' -r routes.json
     ports:
       - 4444:80
     networks:

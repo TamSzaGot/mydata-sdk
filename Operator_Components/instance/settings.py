@@ -123,6 +123,8 @@ OPERATOR_CR_PATH = "/cr"
 OPERATOR_SLR_PATH = "/slr"
 
 
+OPERATOR_DUMMYUI_PATH = "/dummy"
+
 
 SERVICE_URL = "http://localhost:7000"
 

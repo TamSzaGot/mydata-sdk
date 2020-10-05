@@ -93,8 +93,9 @@ def create_service_link(operator_url, service_id, user_key, service_acc, service
     if interactive:
         a = raw_input("Press Enter to continue:")
     print("User key is: {}".format(user_key["Api-Key-User"]))
-    slr_flow = get(operator_url + "api/1.3/slr/account/" + str(user_key["account_id"]) + "/service/"+service_id,
-                   headers={"Api-Key-User": user_key["Api-Key-User"]})
+    account_id = str(user_key["account_id"])
+    print("account_id: ", account_id)
+    slr_flow = get(operator_url + "api/1.3/slr/account/" + account_id + "/service/"+service_id, headers={"Api-Key-User": user_key["Api-Key-User"]})
     #print(slr_flow.history)
     #print("We made a request to:", slr_flow.history[0].url)
     print("It returned us url:", slr_flow.url)
@@ -386,19 +387,20 @@ if __name__ == '__main__':
         if not args.skip_data:
             make_data_request(args.service_url, rs_id)
 
-    if args.remove_slr:
+#    if args.remove_slr:
+    if True:
         print("Sleeping 5 seconds before removing SLR to allow possible CR flow to finish.")
         time.sleep(5)
-        sink_slr_id = slr_1["data"]["slr"]["id"]
-        source_slr_id = slr_2["data"]["slr"]["id"]
-        print("Sink SLR_ID: {}\nSource SLR_ID: {}".format(sink_slr_id, source_slr_id))
+        #sink_slr_id = slr_1["data"]["slr"]["id"]
+        #source_slr_id = slr_2["data"]["slr"]["id"]
+        #print("Sink SLR_ID: {}\nSource SLR_ID: {}".format(sink_slr_id, source_slr_id))
         print("Removing Sink SLR")
         result = remove_slr(args.operator_url, user_key, sink_slr_id, args.sink_id)
 
         print("Removing Source SLR")
         result = remove_slr(args.operator_url, user_key, source_slr_id, args.source_id)
 
-    if False:
+    if True:
         print("\nFetching records from Account for debugging purposes.")
 
         print("\n\nRequesting Last SSR for Sink")

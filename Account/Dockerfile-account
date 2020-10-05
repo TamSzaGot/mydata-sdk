@@ -21,6 +21,12 @@ MAINTAINER hjhsalo <hjhsalo@gmail.com>
 # Now everything including the ENTRYPOINT is being run as root which is bad
 # practise and for example uWSGI complains about this.
 
+# Keeps Python from generating .pyc files in the container
+# ENV PYTHONDONTWRITEBYTECODE 1
+
+# Turns off buffering for easier container logging
+# ENV PYTHONUNBUFFERED 1
+
 ###
 # Install 
 # Specific structure where a single RUN is used to execute everything.
@@ -93,7 +99,12 @@ COPY ./docker-entrypoint-account.sh /
 
 ENTRYPOINT ["/docker-entrypoint-account.sh"]
 
+# Switch to a non-root user, please refer to https://aka.ms/vscode-docker-python-user-rights
+# RUN useradd appuser && chown -R appuser $APP_INSTALL_PATH
+# USER appuser
+
 # NOTE: Maybe this should be replaced with something that doesn't run anything 
 # and the command below should go to compose.yml ??
-CMD ["uwsgi --socket 0.0.0.0:8080 --protocol=http -w wsgi --callable app --processes 2"]
+# CMD ["uwsgi --socket 0.0.0.0:8080 --protocol=http -w wsgi --callable app --processes 2"]
+CMD python run.py
 

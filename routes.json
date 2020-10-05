@@ -1,3 +1,4 @@
 {
-  "/api/v1/": "/"
+  "/api/v1/": "/",
+  "/api/v1/services/:serviceId": "/services?id=:serviceId"
 }
